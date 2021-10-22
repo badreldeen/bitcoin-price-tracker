@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <title>Bitcoin-Price-Tracker</title>
+</head>
+<body>
+   
+    <!-- This example requires Tailwind CSS v2.0+ -->
+<div class="relative bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="flex justify-between items-center border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10">
+        <div class="flex justify-start lg:w-0 lg:flex-1">
+          <a href="#" class="flex">
+            <img class="h-8 w-auto sm:h-10 text-blue-400" src="logo.svg" alt="">
+            <span class="mt-2 ml-2 font-bold">Bitcoin Price Tracker</span>
+          </a>
+          
+        </div>
+      </div>
+    </div>
+
+   
+
+
+
+    <div class="container mx-auto px-4 ">
+       
+        <canvas class="p-10 " id="chartLine"></canvas>
+      </div>
+      
+      <!-- Required chart.js -->
+      
+      <!-- Chart line -->
+      <script>
+        const sendGetRequest = async () => {
+          let labels  = [];
+          let res     = [];
+          let prices  = [];
+          
+            try {
+                const resp = await axios.get('https://api.coindesk.com/v1/bpi/historical/close.json?start=2021-08-01&end=2021-08-20&index=[USD]');   
+                res = resp.data.bpi;
+                for (var property in res) {
+                    if ( ! res.hasOwnProperty(property)) { continue;}
+                    //fill dataset values
+                    labels.push(property);
+                    prices.push(res[property]);
+                }
+
+                const data = {
+                    labels: labels,
+                    datasets: [{
+                        label: '',
+                        backgroundColor: 'black',
+                        borderColor: 'orange',
+                        data: prices,
+                    }]
+                };
+      
+                const configLineChart = {
+                    type: 'line',
+                    data,
+                    options: {}
+                };
+      
+                var chartLine = new Chart(
+                    document.getElementById('chartLine'),
+                    configLineChart
+                );
+
+
+            } catch (err) {
+                // Handle Error Here
+                console.error(err);
+            }
+
+           
+
+
+            
+        };  
+          
+
+         
+        sendGetRequest()
+             
+        
+          
+         
+
+          
+      </script>
+  
+   
+   
+  
+
+</body>
+</html>
