@@ -5,8 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/@themesberg/flowbite@latest/dist/flowbite.min.css" />
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js" defer></script>
+    <script src="https://unpkg.com/@themesberg/flowbite@latest/dist/flowbite.bundle.js"></script>
+    <script src="./main.js"></script>
     <title>Bitcoin-Price-Tracker</title>
 </head>
 <body>
@@ -29,76 +34,36 @@
 
 
 
-    <div class="container mx-auto px-4 ">
-       
+    <div class="container mx-auto px-8 ">
+         
+
+
+
+        <div class="px-12 mb-2 mt-4 flex mx-auto">
+
+           
+            <div date-rangepicker class="flex items-center space-x-6">
+                <div class="relative">
+                      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                          <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
+                      </div>
+                      <input id="datepickerId" name="start" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-yellow-500 focus:border-yellow-500 block w-full pl-10 p-2.5" placeholder="Select date start">
+                  </div>
+                <span class="mx-4 text-gray-500">to</span>
+                <div class="relative">
+                  <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <svg class="w-5 h-5 text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
+                  </div>
+                  <input name="end" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-yellow-500 focus:border-yellow-500 block w-full pl-10 p-2.5" placeholder="Select date end">
+              </div>
+              </div>
+            <a href="#" class="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-yellow-400 hover:bg-yellow-500">
+                Render
+            </a>
+        </div>
         <canvas class="p-10 " id="chartLine"></canvas>
       </div>
       
-      <!-- Required chart.js -->
-      
-      <!-- Chart line -->
-      <script>
-        const sendGetRequest = async () => {
-          let labels  = [];
-          let res     = [];
-          let prices  = [];
-          
-            try {
-                const resp = await axios.get('https://api.coindesk.com/v1/bpi/historical/close.json?start=2021-08-01&end=2021-08-20&index=[USD]');   
-                res = resp.data.bpi;
-                for (var property in res) {
-                    if ( ! res.hasOwnProperty(property)) { continue;}
-                    //fill dataset values
-                    labels.push(property);
-                    prices.push(res[property]);
-                }
-
-                const data = {
-                    labels: labels,
-                    datasets: [{
-                        label: '',
-                        backgroundColor: 'black',
-                        borderColor: 'orange',
-                        data: prices,
-                    }]
-                };
-      
-                const configLineChart = {
-                    type: 'line',
-                    data,
-                    options: {}
-                };
-      
-                var chartLine = new Chart(
-                    document.getElementById('chartLine'),
-                    configLineChart
-                );
-
-
-            } catch (err) {
-                // Handle Error Here
-                console.error(err);
-            }
-
-           
-
-
-            
-        };  
-          
-
-         
-        sendGetRequest()
-             
-        
-          
-         
-
-          
-      </script>
-  
-   
-   
   
 
 </body>
